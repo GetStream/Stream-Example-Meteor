@@ -2,4 +2,4 @@
 
 work in progress Meteor integration + example app.
 
-Integration lives in packages/stream-meteor
+Integration package in packages/stream-meteor
