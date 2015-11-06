@@ -1,0 +1,108 @@
+<template name="aggregated_feed">
+	<div id="wrapper">
+		{{#each activities}}
+			{{#if equals verb 'pin'}}
+				{{> aggregated_pin}}
+			{{else}}
+				{{> aggregated_follow}}
+			{{/if}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="aggregated_pin">
+<div class="aggregation media">
+    <div class="pull-left">
+         {{#if activities.[0].object.item }}
+        	<img src="{{ activities.[0].object.user.avatar_url }}" width="55px">
+         {{/if}}        
+    </div>
+    <div class="media-body">	
+        <div class="media-heading">
+            <div class="aggregation-header">
+                <div class="aggregation-time pull-right">
+                </div>
+                <div class="aggregation-title">
+                    <span>{{ activities.length }} pins</span>
+                </div>
+            </div>
+        </div>
+        {{#each activities }}
+            {{#if object.item}}
+            <article class="pin">
+                <figure>
+                    <div class="pin-image-holder">
+                        <img class="pin-image" src="/media/{{ object.item.image_url }}">
+                    </div>
+                    {{#if message}}
+                        <figcaption class="pin-caption">
+                            {{ message }}
+                        </figcaption>
+                    {{/if}}
+                </figure>
+                <form class="pin-bottom" method="POST" action="/pin">
+                    <div class="media">
+                        <div class="pull-left">                                    
+                            <input class="btn btn-primary btn-sm" type="submit" value="Pin">
+                        </div>
+                        <div class="media-body">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon text-muted">in</span>
+                                <input class="form-control" name="board_name" placeholder="Board name" type="text" value="My favourite things">
+                            </div>
+                        </div>
+                    </div>
+                    <input name="influencer" type="hidden" value="{{ object.item.image_url }}">
+                    <input name="item" type="hidden" value="{{ object.item._id }}">
+                </form>
+                    <footer class="pin-attribution">
+                        by <a href="/profile/{{ object.user.username }}">{{ object.user.username }}</a>
+                        <span class="timesince">{{ time }}</span>
+                        </footer>
+            </article>
+            {{else}}
+                NOT ENRICHED ACTIVITY
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
+</template>
+
+<template name="aggregated_follow">
+<div class="aggregation media">
+    <div class="pull-left">
+            <img src="{{ activities.[0].object.user.avatar_url }}" width="55px">
+    </div>
+    <div class="media-body">
+        <div class="media-heading">
+            <div class="aggregation-header">
+                <div class="aggregation-time pull-right">
+                </div>
+                <div class="aggregation-title">
+                    <span>{{ activities.length }} follows</span>
+                </div>
+            </div>
+        </div>
+        {{#each activities }}
+            {{#if object.target }}
+			<article class="pin">
+			    <figure>
+			        <div class="pin-image-holder">
+			            <img class="pin-image" src="{{ object.target.avatar_url }}">
+			            <figcaption class="follow-caption">
+			                {{ actor.username }} followed {{ object.target.username }}
+			            </figcaption>
+			        </div>
+			    </figure>
+			    <footer class="pin-attribution">
+                    by <a href="/profile/{{ actor.username }}">{{ object.user.username }}</a>
+                    <span class="timesince">{{ time }}</span>
+                </footer>
+			</article>
+            {{ else }}
+                NOT ENRICHED ACTIVITY
+            {{/if }}
+        {{/each }}
+    </div>
+</div>
+</template>

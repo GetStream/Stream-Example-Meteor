@@ -1,0 +1,78 @@
+<template name="feed">
+	<div id="wrapper">
+	    <div class="container-pins">
+		    {{#each activities}}
+		    	{{#if equals verb 'pin'}}
+		    		{{> pin}}
+		    	{{else}}
+		    		{{> follow}}
+	    		{{/if}}
+			{{/each}}
+	    </div>
+	</div>
+</template>
+
+<template name="pin">
+{{#if object.item}}
+<article class="pin">
+    <figure>
+        <div class="pin-image-holder">
+            <img class="pin-image" src="/media/{{ object.item.image_url }}">
+        </div>
+        {{#if object.item.message}}
+            <figcaption class="pin-caption">
+                {{ object.item.message }}
+            </figcaption>
+        {{/if}}
+    </figure>
+    <form class="pin-bottom create-destroy" method="POST" action="/pin">
+        <div class="media">
+        {{#if pinned object.item._id }}
+            <div class="pull-left">
+                <input class="btn btn-danger btn-sm" type="submit" value="Unpin" data-toggle="Pin">
+            </div>
+            <input name="remove" type="hidden" value="1">
+            <input type="hidden" name="_method" value="DELETE">
+        {{else}}
+            <div class="pull-left">
+                <input class="btn btn-primary btn-sm" type="submit" value="Pin" data-toggle="Unpin">
+            </div>
+        {{/if}}
+            <div class="media-body">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon text-muted">in</span>
+                    <input class="form-control" name="board_name" placeholder="Board name" type="text" value="My favourite things">
+                </div>
+            </div>
+        </div>
+        <input name="influencer" type="hidden" value="{{ object.item.image_url }}">
+        <input name="item" type="hidden" value="{{ object.item._id }}">
+    </form>
+    <footer class="pin-attribution">
+        by <a href="/profile/{{ object.user.username }}">{{ object.user.username }}</a>
+        <span class="timesince">{{ object.item.time }}</span>
+    </footer>
+</article>
+{{else}}
+Not enriched activity
+{{/if}}
+</template>
+
+<template name="follow">
+
+<article class="pin">
+    <figure>
+        <div class="pin-image-holder">
+        	<img class="pin-image" src="{{ object.target.avatar_url }}">
+        </div>
+        <figcaption class="follow-caption">
+            {{ actor.username }} followed {{ object.target.username }}
+        </figcaption>
+    </figure>
+    <footer class="pin-attribution">
+        by <a href="/profile/{{ actor.username }}">{{ actor.username }}</a>
+        <span class="timesince">{{ time }}</span>
+    </footer>
+</article>
+
+</template>

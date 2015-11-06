@@ -1,0 +1,37 @@
+<template name="trending">
+    <div class="container-pins">
+    	{{#each this}}
+    		{{> item}}
+    	{{/each}}
+    </div>
+</template>
+
+<template name="item">
+	<article class="pin">
+	    <figure>
+	        <div class="pin-image-holder">
+	            <img class="pin-image" src="/media/{{ image_url }}">
+	        </div>
+	    </figure>
+	    <form class="pin-bottom create-destroy" method="POST">
+	        <div class="media">
+	        {{#if pinned}}
+	            <div class="pull-left">
+	                <input class="btn btn-danger btn-sm" type="submit" value="Unpin" data-toggle="Pin">
+	            </div>
+	            <input name="remove" type="hidden" value="1">
+	            <input type="hidden" name="_method" value="DELETE">
+            {{else}}
+	            <div class="pull-left">
+	                <input class="btn btn-primary btn-sm" type="submit" value="Pin" data-toggle="Unpin">
+	            </div>
+	        {{/if}}
+	        </div>
+	        <input name="influencer" type="hidden" value="{{ image_url }}">
+	        <input name="item" type="hidden" value="{{ _id }}">
+	    </form>
+	    <footer class="pin-attribution">
+	        by <a href="/profile/{{ username }}">{{ username }}</a>
+	    </footer>
+	</article>
+</template>

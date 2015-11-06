@@ -1,0 +1,30 @@
+<template name="appBody">
+{{> nav}}
+
+<section>
+	<article>
+			<div class="jumbotron">
+				<div class="container">
+			        <h1>Stream in action</h1>
+			        <p>
+			        	Welcome to the Pinterest esque example app.
+
+					    When you pin items on this trending page, you'll see them appear in the feeds of your followers.
+					    Pin a few items, follow some user from the People page and have a look at the Flat and Aggregated feed pages.
+			        </p>
+			        <p>
+			        	<a class="btn btn-primary btn-lg" href="https://getstream.io" role="button">
+							<i class="icon-help-circle"></i> GetStream
+						</a>
+					</p>
+				</div>
+		    </div>
+
+	</article>
+</section>
+
+<div class="container">
+	{{> yield}}
+</div>
+
+</template>
