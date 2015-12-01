@@ -1,5 +1,16 @@
-# Stream-Example-Meteor
+# Stream Meteor Example App
 
-work in progress Meteor integration + example app.
+This example Meteor js app shows you how you can use [GetStream.io](https://getstream.io) to built a site similar to Pinterest.
 
-Integration package in packages/stream-meteor
+## Running locally
+
+To run this app locally clone this repository and run the following command in the repositories directory:
+
+```
+meteor run
+```
+
+## Example on Meteor.com
+
+An instance of the example app is available on (getstream.meteor.com)[http://getstream.meteor.com]
+
