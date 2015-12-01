@@ -49,12 +49,34 @@
         <input name="item" type="hidden" value="{{ object.item._id }}">
     </form>
     <footer class="pin-attribution">
-        by <a href="/profile/{{ object.user.username }}">{{ object.user.username }}</a>
-        <span class="timesince">{{ object.item.time }}</span>
+        by <a href="/profile/{{ username object.user }}">{{ username object.user }}</a>
+        <span class="timesince">{{ fromNow object.item.time }}</span>
     </footer>
 </article>
 {{else}}
-Not enriched activity
+<article class="pin">
+    <figure>
+        <div class="pin-image-holder">
+        </div>
+        <figcaption class="pin-caption">
+            Not enriched activity
+        </figcaption>
+    </figure>
+    <form class="pin-bottom create-destroy" method="POST" action="/pin">
+        <div class="media">
+            <div class="media-body">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon text-muted">in</span>
+                    <input class="form-control" name="board_name" placeholder="Board name" type="text" value="My favourite things">
+                </div>
+            </div>
+        </div>
+    </form>
+    <footer class="pin-attribution">
+    by <a href="">...</a>
+    <span class="timesince">...</span>
+</footer>
+</article>
 {{/if}}
 </template>
 
@@ -63,15 +85,15 @@ Not enriched activity
 <article class="pin">
     <figure>
         <div class="pin-image-holder">
-        	<img class="pin-image" src="{{ object.target.avatar_url }}">
+        	<img class="pin-image" src="{{ avatarUrl object.target }}">
         </div>
         <figcaption class="follow-caption">
-            {{ actor.username }} followed {{ object.target.username }}
+            {{ username actor }} followed {{ username object.target }}
         </figcaption>
     </figure>
     <footer class="pin-attribution">
-        by <a href="/profile/{{ actor.username }}">{{ actor.username }}</a>
-        <span class="timesince">{{ time }}</span>
+        by <a href="/profile/{{ username actor }}">{{ username actor }}</a>
+        <span class="timesince">{{ fromNow time }}</span>
     </footer>
 </article>
 

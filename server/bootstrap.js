@@ -2,11 +2,28 @@ Meteor.startup(function() {
   var Users = Meteor.users;
 
   if (Users.find().count() === 0) {
-    debugger;
     var users = [
-    {username: 'Andrew', avatar_url: 'https://github.com/identicons/jasonlong.png'},
-    {username: 'Sergey', avatar_url: 'https://avatars0.githubusercontent.com/u/4436860?v=3&s=96'},
-    {username: 'Thomas', avatar_url: 'https://avatars0.githubusercontent.com/u/125464?v=3&s=96'},
+    {
+      username: 'Andrew', 
+      profile: {
+        avatar_url: 'https://github.com/identicons/jasonlong.png',
+        name: 'Andrew',
+      }
+    },
+    {
+      username: 'Sergey', 
+      profile: {
+        avatar_url: 'https://avatars0.githubusercontent.com/u/4436860?v=3&s=96',
+        name: 'Sergey',
+      },
+    },
+    {
+      username: 'Thomas', 
+      profile: {
+        avatar_url: 'https://avatars0.githubusercontent.com/u/125464?v=3&s=96',
+        name: 'Thomas',
+      },
+    },
     ];
 
     for (var user of users) {
@@ -15,6 +32,9 @@ Meteor.startup(function() {
 
     Users.insert({
       username: 'admin',
+      profile: {
+        name: 'admin',
+      },
       avatar_url: 'https://avatars0.githubusercontent.com/u/4336861?v=3&s=96',
     }, function(err, _id) {
       if (Items.find().count() === 0) {

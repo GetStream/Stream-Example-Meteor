@@ -1,24 +1,29 @@
+
+
 Meteor.publish('items', function() {
   return Items.find({});
 });
 
-Meteor.publish('pinned', function(userId) {
-  check(userId, String);
-
-  var pinned = Pins.find({ user: userId }).fetch(),
+Meteor.publish('pinned', function() {
+  var pinned = Pins.find({ user: this.userId }).fetch(),
   itemIds = _.pluck(pinned, 'item');
 
   return Items.find({ _id: {$in: itemIds }});
 });
 
-Meteor.publish('follows', function(userId) {
-  check(userId, String);
-
-  return Follows.find({ user: userId });
+Meteor.publish('follows', function() {
+  return Follows.find({});
 });
 
 Meteor.publish('users', function() {
-  return Meteor.users.find({});
+  return Meteor.users.find({}, {
+  	fields: {
+  		"services.github.username": 1,
+  		profile: 1,
+  		username: 1,
+  		emails: 1,
+  	}
+  });
 });
 
 Meteor.publish('pins', function() {

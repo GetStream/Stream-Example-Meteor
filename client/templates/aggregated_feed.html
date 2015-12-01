@@ -14,7 +14,7 @@
 <div class="aggregation media">
     <div class="pull-left">
          {{#if activities.[0].object.item }}
-        	<img src="{{ activities.[0].object.user.avatar_url }}" width="55px">
+        	<img src="{{ avatarUrl activities.[0].object.user }}" width="55px">
          {{/if}}        
     </div>
     <div class="media-body">	
@@ -42,9 +42,17 @@
                 </figure>
                 <form class="pin-bottom" method="POST" action="/pin">
                     <div class="media">
-                        <div class="pull-left">                                    
-                            <input class="btn btn-primary btn-sm" type="submit" value="Pin">
-                        </div>
+                        {{#if pinned object.item._id }}
+                            <div class="pull-left">
+                                <input class="btn btn-danger btn-sm" type="submit" value="Unpin" data-toggle="Pin">
+                            </div>
+                            <input name="remove" type="hidden" value="1">
+                            <input type="hidden" name="_method" value="DELETE">
+                        {{else}}
+                            <div class="pull-left">
+                                <input class="btn btn-primary btn-sm" type="submit" value="Pin" data-toggle="Unpin">
+                            </div>
+                        {{/if}}
                         <div class="media-body">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon text-muted">in</span>
@@ -57,7 +65,7 @@
                 </form>
                     <footer class="pin-attribution">
                         by <a href="/profile/{{ object.user.username }}">{{ object.user.username }}</a>
-                        <span class="timesince">{{ time }}</span>
+                        <span class="timesince">{{ fromNow time }}</span>
                         </footer>
             </article>
             {{else}}
@@ -71,7 +79,7 @@
 <template name="aggregated_follow">
 <div class="aggregation media">
     <div class="pull-left">
-            <img src="{{ activities.[0].object.user.avatar_url }}" width="55px">
+            <img src="{{ avatarUrl activities.[0].object.user }}" width="55px">
     </div>
     <div class="media-body">
         <div class="media-heading">
@@ -88,15 +96,15 @@
 			<article class="pin">
 			    <figure>
 			        <div class="pin-image-holder">
-			            <img class="pin-image" src="{{ object.target.avatar_url }}">
+			            <img class="pin-image" src="{{ avatarUrl object.target }}">
 			            <figcaption class="follow-caption">
 			                {{ actor.username }} followed {{ object.target.username }}
 			            </figcaption>
 			        </div>
 			    </figure>
 			    <footer class="pin-attribution">
-                    by <a href="/profile/{{ actor.username }}">{{ object.user.username }}</a>
-                    <span class="timesince">{{ time }}</span>
+                    by <a href="/profile/{{ username actor }}">{{ username object.user }}</a>
+                    <span class="timesince">{{ fromNow time }}</span>
                 </footer>
 			</article>
             {{ else }}

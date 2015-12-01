@@ -5,25 +5,12 @@
 </template>
 
 <template name="profile">
-<div id="wrapper">
-    <div class="col-lg-4">
-            <img width='45' height='45' title='' alt='' src='{{ avatar_url }}'>
-        <h2><a href="/profile/{{ username }}">{{ username }}</a></h2>
+    <div class="col-lg-4" style="margin-bottom: 1em;">
+        <img width="45" height="45" src="{{ avatarUrl this }}?v=2&s=96">
+        <h2><a href="/profile/{{ username this }}">{{ username this }}</a></h2>
             <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-    {{#if showFeed}}
-    <div class="col-lg-8">
-        <div class="container-pins profile">
-            {{#each activities }}
-                {{#if equals activity.verb 'pin' }}
-                    {{> pin}}
-                {{else}}
-                    {{> follow}}
-                {{/if}}
-            {{/each}}
-        </div>
-    </div>
-    {{else}}
-        <form method="POST" class="create-destroy">
+        {{#unless showFeed}}
+            <form method="POST" class="create-destroy">
              {{#if followed }}
                 <input name="remove" type="hidden" value="1">
                 <input type="hidden" name="_method" value="DELETE">
@@ -33,8 +20,20 @@
              {{/if}}
             <input name="target" type="hidden" value="{{ _id }}">
             <input name="next" type="hidden" value="{{ path }}">
-        </form>
+            </form>
+        {{/unless}}
+    </div>
+    {{#if showFeed}}
+    <div class="col-lg-8">
+        <div class="container-pins profile">
+            {{#each activities }}
+                {{#if equals this.verb 'pin' }}
+                    {{> pin}}
+                {{else}}
+                    {{> follow}}
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
      {{/if}}
-     </div>
-</div>
 </template>

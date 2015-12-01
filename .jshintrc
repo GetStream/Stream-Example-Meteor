@@ -26,7 +26,7 @@
                                 //   true     : ensure whatever is used is consistent
                                 //   "single" : require single quotes
                                 //   "double" : require double quotes
-    "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
+    "undef"         : false,     // true: Require all non-global variables to be declared (prevents global leaks)
     "unused"        : true,     // Unused variables:
                                 //   true     : all variables, last function parameter
                                 //   "vars"   : all variables only
@@ -44,7 +44,7 @@
     "boss"          : false,     // true: Tolerate assignments where comparisons would be expected
     "debug"         : false,     // true: Allow debugger statements e.g. browser breakpoints.
     "eqnull"        : false,     // true: Tolerate use of `== null`
-    "esnext"        : false,     // true: Allow ES.next (ES6) syntax (ex: `const`)
+    "esnext"        : true,     // true: Allow ES.next (ES6) syntax (ex: `const`)
     "moz"           : false,     // true: Allow Mozilla specific syntax (extends and overrides esnext features)
                                  // (ex: `for each`, multiple try/catch, function expression…)
     "evil"          : false,     // true: Tolerate use of `eval` and `new Function()`
@@ -89,5 +89,42 @@
     "yui"           : false,    // Yahoo User Interface
 
     // Custom Globals
-    "globals"       : {}        // additional predefined global variables
+    "globals"       : { 
+        "Meteor": false,
+        "DDP": false,
+        "Mongo": false, //Meteor.Collection renamed to Mongo.Collection
+        "Session": false,
+        "Accounts": false,
+        "Template": false,
+        "Blaze": false,  //UI is being renamed Blaze
+        "UI": false,
+        "Match": false,
+        "check": false,
+        "Tracker": false, //Deps renamed to Tracker
+        "Deps": false,
+        "ReactiveVar": false,
+        "EJSON": false,
+        "HTTP": false,
+        "Email": false,
+        "Assets": false,
+        "Handlebars": false,      // https://github.com/meteor/meteor/wiki/Handlebars
+        "Package": false,
+        "App": false, //mobile-config.js
+        // Meteor internals
+        "DDPServer": false,
+        "global": false,
+        "Log": false,
+        "MongoInternals": false,
+        "process": false,
+        "WebApp": false,
+        "WebAppInternals": false,
+        // globals useful when creating Meteor packages
+        "Npm": false,
+        "Tinytest": false,
+        // common Meteor packages
+        "Random": false,
+        "_": false,               // Underscore.js
+        "$": false,               // jQuery
+        "Router": false           // iron-router
+    }        // additional predefined global variables
 }

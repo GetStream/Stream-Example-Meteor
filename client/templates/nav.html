@@ -23,9 +23,57 @@
 	                <li>
 	                    <a href="{{pathFor route='people'}}"><i class="glyphicon glyphicon-user"></i> People</a>
 	                </li>
-	                {{> loginButtons}}
+	                {{#if currentUser}}
+	                <li class="dropdown" id="notification-dropdown">
+	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notification-toggle">
+	                        <i class="glyphicon glyphicon-inbox"></i>  <span class="badge notifications-badge text-danger" id="notifications_inner" style="display:none;">0</span><b class="caret"></b>
+	                    </a>
+	                    <ul id="notification-container" class="dropdown-menu">
+	                    {{# with session "notifications"}}
+	                    	{{#if this.lastFollower}}
+	                    		{{> notification}}
+	                    	{{/if}}
+	                    {{/with}}
+	                    </ul>
+	                </li>
+	                {{/if}}
+	                {{> login}}
 	            </ul>
 	        </div>
 	    </div>
 	</nav>
+</template>
+
+<template name="login">
+{{#if currentUser}}
+    <li class="dropdown{{#if equals location 'profile'}} active{{/if}}">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon"></i>  {{ username currentUser }}<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="/profile">My Profile</a></li>
+            <li><a id="logout" href="/logout">Log Out</a></li>
+        </ul>
+    </li>
+{{else}}
+	{{> loginButtons}}
+{{/if}}
+</template>
+
+<template name="notification">
+<li class="notification-item" style="border: 1px red;">
+	<div>
+        <article>
+            <figure>
+                <div>
+                    <img src="{{ avatarUrl lastFollower.object.user }}" width="32">
+                    <figcaption>
+                        {{ username this.lastFollower.object.user }}{{#if more}} and {{ count }} more {{/if}} followed you
+                        <span class="timesince">{{ fromNow lastFollower.time}}</span>
+                    </figcaption>
+                </div>
+            </figure>
+        </article>
+	</div>
+</li>
 </template>
