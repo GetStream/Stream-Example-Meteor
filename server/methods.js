@@ -1,20 +1,3 @@
-var Future = Npm.require('fibers/future');
-
-var await = function(promise) {
-  var fut = new Future();
-
-  promise.then(fut.return.bind(fut), 
-    function(err) {
-      if(err.status_code && err.detail) {
-        fut.throw('Feed request failed with code: ' + err.status_code + ' and detail: ' + err.detail);
-      } else {
-        fut.throw('Getstream.io API request failed with error', err);
-      }
-  });
-
-  return fut.wait();
-};
-
 Meteor.methods({
   activities: function() {
     if (!this.userId) {
@@ -22,7 +5,7 @@ Meteor.methods({
     }
 
     var flatFeed = Stream.feedManager.getNewsFeeds(this.userId)['flat'],
-        feed = await(flatFeed.get({})),
+        feed = Stream.await(flatFeed.get({})),
         activities = feed.results;
 
     return activities;
@@ -42,7 +25,7 @@ Meteor.methods({
     }
 
     var aggregatedFeed = Stream.feedManager.getNewsFeeds(this.userId)['aggregated'],
-    feed = await(aggregatedFeed.get({})),
+    feed = Stream.await(aggregatedFeed.get({})),
     aggregatedActivities = feed.results;
 
     return aggregatedActivities;
@@ -54,7 +37,7 @@ Meteor.methods({
     }
 
     var notificationFeed = Stream.feedManager.getNotificationFeed(this.userId),
-        feed = await(notificationFeed.get({ mark_read: true, mark_seen: true })),
+        feed = Stream.await(notificationFeed.get({ mark_read: true, mark_seen: true })),
         activities = feed.results;
 
     return activities;
