@@ -12,5 +12,5 @@ meteor run
 
 ## Example on Meteor.com
 
-An instance of the example app is available on (getstream.meteor.com)[http://getstream.meteor.com]
+An instance of the example app is available on [getstream.meteor.com](http://getstream.meteor.com)
 
