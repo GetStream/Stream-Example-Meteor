@@ -1,0 +1,9 @@
+{
+  "streamApiSecret": "",
+
+  "public" : {
+    "streamApiKey": "",
+
+    "streamApiAppId": ""
+  }
+}

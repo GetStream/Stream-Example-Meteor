@@ -4,7 +4,7 @@ This example Meteor js app shows you how you can use [GetStream.io](https://gets
 
 ## Running locally
 
-To run this app locally clone this repository and run the following command in the repositories directory:
+To run this app locally clone this repository add your [Getstream.io](https://getstream.io/dashboard) app key/id/secret to ``settings.json`` and run the following command in the repositories directory:
 
 ```
 meteor run
