@@ -29,11 +29,7 @@
 	                        <i class="glyphicon glyphicon-inbox"></i>  <span class="badge notifications-badge text-danger" id="notifications_inner" style="display:none;">0</span><b class="caret"></b>
 	                    </a>
 	                    <ul id="notification-container" class="dropdown-menu">
-	                    {{# with session "notifications"}}
-	                    	{{#if this.lastFollower}}
-	                    		{{> notification}}
-	                    	{{/if}}
-	                    {{/with}}
+	                    	{{> notification getNotification}}
 	                    </ul>
 	                </li>
 	                {{/if}}
@@ -66,9 +62,9 @@
         <article>
             <figure>
                 <div>
-                    <img src="{{ avatarUrl lastFollower.object.user }}" width="32">
+                    <img src="{{ avatarUrl lastFollower.actor }}" width="32">
                     <figcaption>
-                        {{ username this.lastFollower.object.user }}{{#if more}} and {{ count }} more {{/if}} followed you
+                        {{ username lastFollower.actor }}{{#if more}} and {{ count }} more {{/if}} followed you
                         <span class="timesince">{{ fromNow lastFollower.time}}</span>
                     </figcaption>
                 </div>

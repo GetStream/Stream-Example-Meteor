@@ -1,24 +1,20 @@
-
-
-Meteor.publish('items', function() {
-  return Items.find({});
-});
-
-Meteor.publish('pinned', function() {
-  var pinned = Pins.find({ user: this.userId }).fetch(),
-  itemIds = _.pluck(pinned, 'item');
-
-  return Items.find({ _id: {$in: itemIds }});
+// Publish the collections (with limits)
+// notice that subscriptions on 'Stream.feed.aFeedGroup' manager
+// their own publications needed for their feed
+// 
+Meteor.publish('items', function(limit=20) {
+  return Items.find({}, { limit: limit });
 });
 
 Meteor.publish('follows', function() {
-  return Follows.find({});
+  return Follows.find({ user: this.userId });
 });
 
-Meteor.publish('users', function() {
+Meteor.publish('users', function(limit=20) {
   return Meteor.users.find({}, {
+  	limit: limit,
   	fields: {
-  		"services.github.username": 1,
+  		'services.github.username': 1,
   		profile: 1,
   		username: 1,
   		emails: 1,
@@ -27,5 +23,5 @@ Meteor.publish('users', function() {
 });
 
 Meteor.publish('pins', function() {
-  return Pins.find({});
+  return Pins.find({ user: this.userId });
 });

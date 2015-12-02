@@ -1,3 +1,4 @@
+// Setup the initial data for our MongoDB
 Meteor.startup(function() {
   var Users = Meteor.users;
 

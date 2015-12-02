@@ -6,44 +6,38 @@ Template.login.events({
 	}
 });
 
+// Helper method to retrieve the reactive var set in the onCreated handler
+// notice that we can not access this.notification within the template's data context
+Template.nav.helpers({
+	getNotification: function() {
+		return Template.instance().notification.get();
+	}
+});
+
 Template.nav.onCreated(function() {
-	Meteor.call('notification', function(err, activities) {
-	    if(err) {
-	    	console.error('Requesting notification feed failed with:', err);
-	    }
+	// Here we manage a subscription to a Stream feed not tied to one route
+	// This subscription is made on each page including the 'nav' template
 
-	    if(activities && activities[0]) {
-	    	var enriched = Stream.backend.enrichActivities(activities[0].activities);
-		}
+	this.notification = new ReactiveVar(); // Use reactive var to store value retrieved from the feed
 
-	    if(enriched) {
-		    Session.set('notifications', {
-		    		lastFollower: enriched[0],
-		    		count: enriched.length - 1,
-		    		more: enriched.length > 1,
-		    });
+	// To ensure the template is rerendered once a new notification is pushed to the server
+	// we have to run the following code block in an autorun wrapper
+	this.autorun(() => {
+		// Subscribe to the feed we are interested in
+		var sub = Meteor.subscribe('Stream.feed.notification');
+
+		if(sub.ready()) { // Check if the subscription is ready
+			var notifications = Stream.feeds.notification.find().fetch();
+
+
+			if(notifications.length > 0 && notifications[0].activities) {
+				// Update/set the reactive var (this will rerender the template)
+				this.notification.set({
+					lastFollower: notifications[0].activities[0],
+					count: notifications.length - 1,
+					more: notifications.length > 1,
+				});
+			}
 		}
 	});
-
-	if(Meteor.userId()) {
-		Meteor.call('notificationFeedToken', function(err, token) {
-			if(err) {
-				console.error('Requestion notification feed token failed with: ', err);
-			}
-
-			var notificationFeed = Stream.feedManager.getNotificationFeed(Meteor.userId(), token);
-
-			notificationFeed.subscribe(function(data) {
-				var el = Template.nav.$('#notification_inner');
-
-				var unseen = data.unseen;
-				el.html(unseen);
-				if (unseen === 0) {
-					el.hide();
-				} else {
-					el.show();
-				}
-			});
-		});
-	}
 });

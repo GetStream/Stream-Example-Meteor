@@ -20,8 +20,6 @@ Template.registerHelper('avatarUrl', function(user) {
 
 Template.registerHelper('username', username);
 
-Template.registerHelper('session', key => Session.get(key));
-
 Template.registerHelper('pinned', function(itemId) {
 	return Pins.find({item: itemId, user: Meteor.userId()}).count() > 0;
 });

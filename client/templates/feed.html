@@ -13,21 +13,21 @@
 </template>
 
 <template name="pin">
-{{#if object.item}}
+{{#if item}}
 <article class="pin">
     <figure>
         <div class="pin-image-holder">
-            <img class="pin-image" src="/media/{{ object.item.image_url }}">
+            <img class="pin-image" src="/media/{{ item.image_url }}">
         </div>
-        {{#if object.item.message}}
+        {{#if item.message}}
             <figcaption class="pin-caption">
-                {{ object.item.message }}
+                {{ item.message }}
             </figcaption>
         {{/if}}
     </figure>
     <form class="pin-bottom create-destroy" method="POST" action="/pin">
         <div class="media">
-        {{#if pinned object.item._id }}
+        {{#if pinned item._id }}
             <div class="pull-left">
                 <input class="btn btn-danger btn-sm" type="submit" value="Unpin" data-toggle="Pin">
             </div>
@@ -45,12 +45,12 @@
                 </div>
             </div>
         </div>
-        <input name="influencer" type="hidden" value="{{ object.item.image_url }}">
-        <input name="item" type="hidden" value="{{ object.item._id }}">
+        <input name="influencer" type="hidden" value="{{ item.image_url }}">
+        <input name="item" type="hidden" value="{{ item._id }}">
     </form>
     <footer class="pin-attribution">
-        by <a href="/profile/{{ username object.user }}">{{ username object.user }}</a>
-        <span class="timesince">{{ fromNow object.item.time }}</span>
+        by <a href="/profile/{{ username actor }}">{{ username actor }}</a>
+        <span class="timesince">{{ fromNow item.time }}</span>
     </footer>
 </article>
 {{else}}
@@ -85,10 +85,10 @@
 <article class="pin">
     <figure>
         <div class="pin-image-holder">
-        	<img class="pin-image" src="{{ avatarUrl object.target }}">
+        	<img class="pin-image" src="{{ avatarUrl target }}">
         </div>
         <figcaption class="follow-caption">
-            {{ username actor }} followed {{ username object.target }}
+            {{ username actor }} followed {{ username target }}
         </figcaption>
     </figure>
     <footer class="pin-attribution">

@@ -13,8 +13,8 @@
 <template name="aggregated_pin">
 <div class="aggregation media">
     <div class="pull-left">
-         {{#if activities.[0].object.item }}
-        	<img src="{{ avatarUrl activities.[0].object.user }}" width="55px">
+         {{#if activities.[0].item }}
+        	<img src="{{ avatarUrl activities.[0].actor }}" width="55px">
          {{/if}}        
     </div>
     <div class="media-body">	
@@ -28,11 +28,11 @@
             </div>
         </div>
         {{#each activities }}
-            {{#if object.item}}
+            {{#if item}}
             <article class="pin">
                 <figure>
                     <div class="pin-image-holder">
-                        <img class="pin-image" src="/media/{{ object.item.image_url }}">
+                        <img class="pin-image" src="/media/{{ item.image_url }}">
                     </div>
                     {{#if message}}
                         <figcaption class="pin-caption">
@@ -42,7 +42,7 @@
                 </figure>
                 <form class="pin-bottom" method="POST" action="/pin">
                     <div class="media">
-                        {{#if pinned object.item._id }}
+                        {{#if pinned item._id }}
                             <div class="pull-left">
                                 <input class="btn btn-danger btn-sm" type="submit" value="Unpin" data-toggle="Pin">
                             </div>
@@ -60,11 +60,11 @@
                             </div>
                         </div>
                     </div>
-                    <input name="influencer" type="hidden" value="{{ object.item.image_url }}">
-                    <input name="item" type="hidden" value="{{ object.item._id }}">
+                    <input name="influencer" type="hidden" value="{{ item.image_url }}">
+                    <input name="item" type="hidden" value="{{ item._id }}">
                 </form>
                     <footer class="pin-attribution">
-                        by <a href="/profile/{{ object.user.username }}">{{ object.user.username }}</a>
+                        by <a href="/profile/{{ username actor }}">{{ username actor }}</a>
                         <span class="timesince">{{ fromNow time }}</span>
                         </footer>
             </article>
@@ -79,7 +79,7 @@
 <template name="aggregated_follow">
 <div class="aggregation media">
     <div class="pull-left">
-            <img src="{{ avatarUrl activities.[0].object.user }}" width="55px">
+        <img src="{{ avatarUrl activities.[0].actor }}" width="55px">
     </div>
     <div class="media-body">
         <div class="media-heading">
@@ -92,18 +92,18 @@
             </div>
         </div>
         {{#each activities }}
-            {{#if object.target }}
+            {{#if target }}
 			<article class="pin">
 			    <figure>
 			        <div class="pin-image-holder">
-			            <img class="pin-image" src="{{ avatarUrl object.target }}">
+			            <img class="pin-image" src="{{ avatarUrl target }}">
 			            <figcaption class="follow-caption">
-			                {{ actor.username }} followed {{ object.target.username }}
+			                {{ username actor }} followed {{ username target }}
 			            </figcaption>
 			        </div>
 			    </figure>
 			    <footer class="pin-attribution">
-                    by <a href="/profile/{{ username actor }}">{{ username object.user }}</a>
+                    by <a href="/profile/{{ username actor }}">{{ username actor }}</a>
                     <span class="timesince">{{ fromNow time }}</span>
                 </footer>
 			</article>
