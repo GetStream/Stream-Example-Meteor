@@ -9,8 +9,10 @@ To run this app locally clone this repository add your [Getstream.io](https://ge
 ```
 meteor run --settings settings.json
 ```
-
+<!--
+ 
 ## Example on Meteor.com
 
 An instance of the example app is available on [getstream.meteor.com](http://getstream.meteor.com)
 
+ -->
