@@ -36,7 +36,7 @@ fastclick@1.0.7
 fourseven:scss@3.4.1
 geojson-utils@1.0.4
 getstream:bin-deps@0.1.1
-getstream:stream-meteor@0.2.1
+getstream:stream-meteor@0.3.3
 github@1.1.4
 hot-code-push@1.0.0
 html-tools@1.0.5

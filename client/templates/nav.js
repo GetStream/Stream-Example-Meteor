@@ -24,7 +24,7 @@ Template.nav.onCreated(function() {
 	// we have to run the following code block in an autorun wrapper
 	this.autorun(() => {
 		// Subscribe to the feed we are interested in
-		var sub = Meteor.subscribe('Stream.feed.notification');
+		var sub = Meteor.subscribe('Stream.feeds.notification');
 
 		if(sub.ready()) { // Check if the subscription is ready
 			var notifications = Stream.feeds.notification.find().fetch();

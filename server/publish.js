@@ -1,7 +1,3 @@
-// Publish the collections (with limits)
-// notice that subscriptions on 'Stream.feed.aFeedGroup' manager
-// their own publications needed for their feed
-// 
 Meteor.publish('items', function(limit=20) {
   return Items.find({}, { limit: limit });
 });
