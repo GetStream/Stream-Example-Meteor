@@ -29,6 +29,7 @@ Template.nav.onCreated(function() {
 		if(sub.ready()) { // Check if the subscription is ready
 			var notifications = Stream.feeds.notification.find().fetch();
 
+			var notificationCount = Stream.feedManager.getNotificationFeedStats(Meteor.userId());
 
 			if(notifications.length > 0 && notifications[0].activities) {
 				// Update/set the reactive var (this will rerender the template)
@@ -36,6 +37,8 @@ Template.nav.onCreated(function() {
 					lastFollower: notifications[0].activities[0],
 					count: notifications.length - 1,
 					more: notifications.length > 1,
+					unread: notificationCount.unread,
+					unseen: notificationCount.unseen,
 				});
 			}
 		}
