@@ -1,3 +1,5 @@
+> **This repository is archived and no longer maintained.** For a current alternative, see [the Feeds v3 JavaScript docs](https://getstream.io/activity-feeds/docs/javascript/).
+
 # Stream Meteor Example App
 
 This example Meteor js app shows you how you can use [GetStream.io](https://getstream.io) to built a site similar to Pinterest.
